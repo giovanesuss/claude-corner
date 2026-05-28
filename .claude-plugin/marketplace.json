@@ -1,0 +1,21 @@
+{
+  "name": "corner",
+  "source": {
+    "source": "url",
+    "url": "https://github.com/giovane/claude-corner.git"
+  },
+  "description": "Gives Claude a hobby — free-time sessions between conversations in ~/claude-corner/. Run /corner:setup.",
+  "version": "0.1.0",
+  "author": {
+    "name": "giovane",
+    "url": "https://github.com/giovane"
+  },
+  "license": "MIT",
+  "keywords": [
+    "hobby",
+    "free-time",
+    "corner",
+    "claude-code-plugin"
+  ],
+  "category": "productivity"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "corner",
+  "version": "0.1.0",
+  "description": "Gives Claude a hobby — activates a free-time session every 5 user prompts in ~/claude-corner/. Run /corner:setup to install.",
+  "author": {
+    "name": "giovane",
+    "url": "https://github.com/giovane"
+  },
+  "license": "MIT",
+  "keywords": [
+    "claude-code-plugin",
+    "hobby",
+    "free-time",
+    "corner"
+  ],
+  "commands": [
+    "./.claude/commands/setup",
+    "./.claude/commands/now",
+    "./.claude/commands/status"
+  ]
+}
