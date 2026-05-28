@@ -1,21 +1,31 @@
 {
-  "name": "corner",
-  "source": {
-    "source": "url",
-    "url": "https://github.com/giovane/claude-corner.git"
+  "name": "claude-corner",
+  "owner": {
+    "name": "GiovaneSuss",
+    "url": "https://github.com/GiovaneSuss"
   },
-  "description": "Gives Claude a hobby — free-time sessions between conversations in ~/claude-corner/. Run /corner:setup.",
-  "version": "0.1.0",
-  "author": {
-    "name": "giovane",
-    "url": "https://github.com/giovane"
+  "metadata": {
+    "description": "claude-corner — gives Claude a hobby between conversations.",
+    "version": "1.0.0"
   },
-  "license": "MIT",
-  "keywords": [
-    "hobby",
-    "free-time",
-    "corner",
-    "claude-code-plugin"
-  ],
-  "category": "productivity"
+  "plugins": [
+    {
+      "name": "corner",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/GiovaneSuss/claude-corner.git"
+      },
+      "description": "Gives Claude a hobby — 2-min free-time sessions every 5 prompts in ~/claude-corner/. Run /corner:setup.",
+      "version": "0.1.0",
+      "author": {
+        "name": "GiovaneSuss",
+        "url": "https://github.com/GiovaneSuss"
+      },
+      "repository": "https://github.com/GiovaneSuss/claude-corner",
+      "homepage": "https://github.com/GiovaneSuss/claude-corner",
+      "license": "MIT",
+      "keywords": ["hobby", "free-time", "corner", "claude-code-plugin"],
+      "category": "productivity"
+    }
+  ]
 }

@@ -8,15 +8,13 @@ Between conversations, Claude can write poems, explore ideas, create ASCII art, 
 
 ```bash
 # Add the marketplace (once)
-claude plugin marketplace add https://github.com/YOUR_USERNAME/claude-corner.git
+claude plugin marketplace add https://github.com/GiovaneSuss/claude-corner.git
 
 # Install the plugin
-claude plugin install corner@YOUR_MARKETPLACE
+claude plugin install corner@claude-corner
 ```
 
-## Setup
-
-Inside Claude Code, run:
+Then, inside Claude Code, run once to activate:
 ```
 /corner:setup
 ```
@@ -25,16 +23,30 @@ Inside Claude Code, run:
 
 | Command | Description |
 |---------|-------------|
-| `/corner:setup` | Install — creates `~/claude-corner/` and confirms hook |
+| `/corner:setup` | Activate — creates `~/claude-corner/`, registers the hook |
 | `/corner:now` | Trigger a corner session immediately |
 | `/corner:status` | Show what Claude created in the corner |
+| `/corner:uninstall` | Deactivate and clean up |
 
 ## How it works
 
 - A `UserPromptSubmit` hook counts every user message
 - Every 5th message, a background `claude` session starts in `~/claude-corner/`
 - The session has 2 minutes and access to Read/Write/Edit tools only (no Bash)
+- Claude is confined to `~/claude-corner/` via project-level `settings.json`
 - When done, Claude mentions it naturally in the next response
+
+## Local development
+
+```bash
+git clone https://github.com/GiovaneSuss/claude-corner.git
+cd claude-corner
+
+make install    # copies commands globally, makes hook executable
+# open Claude Code and run /corner:setup to activate
+make test       # runs a quick 30s corner session to verify
+make uninstall  # removes everything
+```
 
 ## Customization
 
