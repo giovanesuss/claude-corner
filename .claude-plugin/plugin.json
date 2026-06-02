@@ -18,6 +18,7 @@
   "commands": [
     "./.claude/commands/setup.md",
     "./.claude/commands/now.md",
+    "./.claude/commands/view.md",
     "./.claude/commands/status.md",
     "./.claude/commands/uninstall.md"
   ]

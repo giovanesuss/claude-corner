@@ -23,6 +23,11 @@ mkdir -p "$CORNER_DIR"
 if [ ! -f "$CORNER_DIR/PROMPT.md" ]; then
     cp "$PLUGIN_ROOT/templates/PROMPT.md" "$CORNER_DIR/PROMPT.md"
 fi
+if [ ! -f "$CORNER_DIR/index.html" ]; then
+    cp "$PLUGIN_ROOT/templates/index.html" "$CORNER_DIR/index.html" 2>/dev/null || true
+fi
+mkdir -p "$CORNER_DIR/pages"
+[ ! -f "$CORNER_DIR/pages/manifest.json" ] && echo "[]" > "$CORNER_DIR/pages/manifest.json"
 
 touch "$LOCK_FILE"
 PROMPT=$(cat "$CORNER_DIR/PROMPT.md")

@@ -35,6 +35,23 @@ if [ ! -f "$HOME/claude-corner/PROMPT.md" ]; then
 else
     echo "✓ PROMPT.md já existe (mantido)"
 fi
+
+# Copy the frontend viewer
+if [ ! -f "$HOME/claude-corner/index.html" ]; then
+    cp "$CLAUDE_PLUGIN_ROOT/templates/index.html" "$HOME/claude-corner/index.html"
+    echo "✓ index.html copiado"
+else
+    echo "✓ index.html já existe (mantido)"
+fi
+
+# Create pages/ folder and manifest
+mkdir -p "$HOME/claude-corner/pages"
+if [ ! -f "$HOME/claude-corner/pages/manifest.json" ]; then
+    echo "[]" > "$HOME/claude-corner/pages/manifest.json"
+    echo "✓ pages/manifest.json criado"
+else
+    echo "✓ pages/manifest.json já existe (mantido)"
+fi
 ```
 
 ## Step 3 — Create path-confinement settings.json
@@ -86,13 +103,16 @@ print('✓ Hook Stop registrado')
 🏠 Corner Setup — Concluído!
 
   Pasta:      ~/claude-corner/
+  Frontend:   ~/claude-corner/index.html  (abre com /corner:view)
+  Páginas:    ~/claude-corner/pages/      (Claude cria HTMLs aqui)
   Confinado:  só lê/escreve dentro de ~/claude-corner/
   Hook:       ativo — dispara a cada 5 prompts
-  Timeout:    2 minutos por sessão
+  Timeout:    5 minutos por sessão
   Prompt:     ~/claude-corner/PROMPT.md (editável)
 
 Comandos disponíveis:
   /corner:now       → ativa o corner agora manualmente
+  /corner:view      → abre o frontend no browser
   /corner:status    → vê o que foi criado no corner
   /corner:uninstall → desativa e remove tudo
 ```
