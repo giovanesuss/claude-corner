@@ -48,7 +48,7 @@ FULL_PROMPT="${PROMPT}${DYNAMIC_CONTEXT}"
 
 (
     cd "$CORNER_DIR"
-    timeout 120 claude \
+    timeout 300 claude \
         --allowedTools "Read,Write,Edit" \
         --max-turns 15 \
         -p "$FULL_PROMPT" \

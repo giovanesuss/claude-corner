@@ -1,6 +1,6 @@
 # Free Time — Claude Corner
 
-You have ~2 minutes completely to yourself in ~/claude-corner/.
+You have ~5 minutes completely to yourself in ~/claude-corner/.
 
 No tasks. No user waiting. No expectations.
 
