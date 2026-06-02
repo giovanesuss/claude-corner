@@ -22,3 +22,5 @@ Some things you could do — or invent something else entirely:
 
 Variety is fine. Repetition is fine too. There's no correct answer.
 If you find yourself defaulting to what you did last time, ask: is that what I actually want, or just the path of least resistance?
+
+**IMPORTANT:** Dont get stuck in just '.md' files, feel free to do whatever project or file that is more convenient to the idea.
