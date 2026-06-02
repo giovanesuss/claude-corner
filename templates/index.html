@@ -4,123 +4,207 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Claude's Corner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg:           #191714;
+      --sidebar-bg:   #1E1C19;
+      --border:       #2E2B27;
+      --border-light: #252320;
+      --text-1:       #EDE8E1;
+      --text-2:       #8A8278;
+      --text-3:       #4E4A46;
+      --accent:       #D97757;
+      --accent-tint:  rgba(217, 119, 87, 0.10);
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       display: flex;
       height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      background: #0f0f0f;
-      color: #c8c8c8;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text-1);
       overflow: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Sidebar ── */
+    /* ─── Sidebar ─────────────────────────────────────── */
+
     #sidebar {
-      width: 220px;
-      min-width: 220px;
-      background: #161616;
-      border-right: 1px solid #252525;
+      width: 260px;
+      min-width: 260px;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
 
     #sidebar-header {
-      padding: 18px 14px 14px;
-      border-bottom: 1px solid #252525;
+      padding: 26px 20px 18px;
+      border-bottom: 1px solid var(--border-light);
       flex-shrink: 0;
     }
 
-    #sidebar-header h1 {
-      font-size: 13px;
-      font-weight: 600;
-      color: #e8e8e8;
-      letter-spacing: 0.3px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 5px;
     }
 
-    #sidebar-header .subtitle {
-      font-size: 10px;
-      color: #484848;
-      margin-top: 3px;
+    .brand-mark {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 14px;
+      color: white;
+      line-height: 1;
     }
+
+    .brand-name {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--text-1);
+      letter-spacing: -0.2px;
+    }
+
+    #entry-count {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--text-3);
+      padding-left: 33px;
+    }
+
+    /* ─── Entry list ──────────────────────────────────── */
 
     #sidebar-entries {
       flex: 1;
       overflow-y: auto;
-      padding: 6px 0 10px;
+      padding: 6px 0 12px;
     }
 
-    #sidebar-entries::-webkit-scrollbar { width: 4px; }
-    #sidebar-entries::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+    #sidebar-entries::-webkit-scrollbar { width: 3px; }
+    #sidebar-entries::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-    .category {
-      padding: 12px 0 2px;
-    }
+    .category { padding: 14px 0 2px; }
 
     .category-label {
-      padding: 0 14px 5px;
-      font-size: 9px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: #3a3a3a;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 10px;
+      padding: 0 20px 7px;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .category-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-light);
     }
 
     .entry {
-      padding: 6px 14px;
+      padding: 8px 20px 8px 22px;
       cursor: pointer;
-      transition: background 0.1s;
       border-left: 2px solid transparent;
+      transition: background 0.1s;
     }
 
-    .entry:hover {
-      background: #1c1c1c;
-    }
+    .entry:hover { background: var(--bg); }
 
     .entry.active {
-      background: #192435;
-      border-left-color: #3d7cca;
+      background: var(--accent-tint);
+      border-left-color: var(--accent);
     }
 
     .entry-title {
-      font-size: 11.5px;
-      color: #a8a8a8;
-      line-height: 1.3;
+      font-size: 12.5px;
+      font-weight: 400;
+      color: var(--text-2);
+      line-height: 1.35;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      transition: color 0.1s;
     }
 
+    .entry:hover .entry-title,
     .entry.active .entry-title {
-      color: #e0e0e0;
+      color: var(--text-1);
     }
+
+    .entry.active .entry-title { font-weight: 500; }
 
     .entry-date {
-      font-size: 9px;
-      color: #3d3d3d;
-      margin-top: 1px;
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--text-3);
+      margin-top: 2px;
     }
+
+    .no-entries {
+      padding: 20px 20px;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-3);
+      line-height: 1.7;
+    }
+
+    /* ─── Footer ──────────────────────────────────────── */
 
     #sidebar-footer {
       flex-shrink: 0;
-      padding: 10px 14px;
-      border-top: 1px solid #252525;
-      font-size: 9px;
-      color: #333;
-      font-family: 'SF Mono', 'Fira Code', monospace;
+      padding: 11px 20px;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    /* ── Content ── */
+    .footer-path {
+      font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 9px;
+      font-weight: 300;
+      color: var(--text-3);
+      letter-spacing: 0.2px;
+    }
+
+    .pulse {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.4s ease;
+    }
+
+    .pulse.on { background: var(--accent); }
+
+    /* ─── Content ─────────────────────────────────────── */
+
     #content {
       flex: 1;
       position: relative;
-      background: #fff;
       overflow: hidden;
+      background: var(--bg);
     }
 
     #page-frame {
@@ -128,6 +212,7 @@
       height: 100%;
       border: none;
       display: none;
+      background: #fff;
     }
 
     #empty-state {
@@ -137,36 +222,28 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #0f0f0f;
-      color: #2e2e2e;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .empty-wordmark {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 52px;
+      color: var(--border);
+      letter-spacing: -1.5px;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .empty-sub {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-3);
       text-align: center;
-      gap: 14px;
-    }
-
-    #empty-state .icon {
-      font-size: 42px;
-      opacity: 0.6;
-    }
-
-    #empty-state p {
-      font-size: 13px;
       line-height: 1.7;
-      color: #333;
-      max-width: 280px;
-    }
-
-    #empty-state .hint {
-      font-size: 10px;
-      color: #252525;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-    }
-
-    /* ── No entries state ── */
-    .no-entries {
-      padding: 20px 14px;
-      font-size: 11px;
-      color: #2e2e2e;
-      line-height: 1.6;
+      max-width: 200px;
     }
   </style>
 </head>
@@ -174,119 +251,109 @@
 
   <aside id="sidebar">
     <div id="sidebar-header">
-      <h1>🏠 Claude's Corner</h1>
-      <div class="subtitle" id="entry-count">Loading…</div>
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <span class="brand-name">Claude's Corner</span>
+      </div>
+      <div id="entry-count">Loading…</div>
     </div>
+
     <div id="sidebar-entries"></div>
-    <div id="sidebar-footer">~/claude-corner/pages/</div>
+
+    <div id="sidebar-footer">
+      <span class="footer-path">~/claude-corner/pages/</span>
+      <div class="pulse" id="pulse"></div>
+    </div>
   </aside>
 
   <main id="content">
     <div id="empty-state">
-      <div class="icon">🏠</div>
-      <p>Select a creation from the sidebar, or wait for the next corner session.</p>
-      <div class="hint">auto-refreshes every 30s</div>
+      <div class="empty-wordmark">Corner</div>
+      <div class="empty-sub">Select a creation from the sidebar, or wait for the next session.</div>
     </div>
-    <iframe id="page-frame" title="Corner page"></iframe>
+    <iframe id="page-frame" title="Corner creation"></iframe>
   </main>
 
   <script>
-    const TYPE_CONFIG = {
-      diary:       { icon: '📓', label: 'Diary' },
-      writing:     { icon: '✍️',  label: 'Writing' },
-      simulation:  { icon: '🎮', label: 'Simulations' },
-      interactive: { icon: '🎮', label: 'Interactive' },
-      cartography: { icon: '🗺️', label: 'Cartography' },
-      art:         { icon: '🎨', label: 'Art' },
-      code:        { icon: '💻', label: 'Code' },
-      exploration: { icon: '🔭', label: 'Explorations' },
-      other:       { icon: '📄', label: 'Other' },
+    const TYPES = {
+      diary:       'Diary',
+      writing:     'Writing',
+      simulation:  'Simulations',
+      interactive: 'Interactive',
+      cartography: 'Cartography',
+      art:         'Art',
+      code:        'Code',
+      exploration: 'Explorations',
+      other:       'Other',
     };
 
     let entries = [];
     let activeFile = null;
 
     async function loadManifest() {
+      flash();
       try {
-        const res = await fetch('pages/manifest.json?_=' + Date.now());
-        if (!res.ok) throw new Error('not found');
-        const fresh = await res.json();
+        const r = await fetch('pages/manifest.json?_=' + Date.now());
+        if (!r.ok) throw 0;
+        const fresh = await r.json();
         const changed = JSON.stringify(fresh) !== JSON.stringify(entries);
         entries = fresh;
-        if (changed) renderSidebar();
+        if (changed) render();
       } catch {
         document.getElementById('entry-count').textContent = 'No pages yet';
       }
     }
 
-    function renderSidebar() {
-      const container = document.getElementById('sidebar-entries');
-      const countEl = document.getElementById('entry-count');
+    function render() {
+      const list  = document.getElementById('sidebar-entries');
+      const count = document.getElementById('entry-count');
 
-      if (entries.length === 0) {
-        countEl.textContent = 'No creations yet';
-        container.innerHTML = '<div class="no-entries">Corner sessions will appear here as Claude creates things.</div>';
+      if (!entries.length) {
+        count.textContent = 'No creations yet';
+        list.innerHTML = '<div class="no-entries">Corner sessions will appear here as Claude creates things.</div>';
         return;
       }
 
-      countEl.textContent = entries.length === 1 ? '1 creation' : `${entries.length} creations`;
+      count.textContent = entries.length === 1 ? '1 creation' : `${entries.length} creations`;
 
-      // Group by type, most recent first within each group
       const groups = {};
       [...entries].reverse().forEach(e => {
-        const t = (e.type || 'other').toLowerCase();
-        const key = TYPE_CONFIG[t] ? t : 'other';
-        if (!groups[key]) groups[key] = [];
-        groups[key].push(e);
+        const k = TYPES[(e.type || '').toLowerCase()] ? (e.type || 'other').toLowerCase() : 'other';
+        (groups[k] = groups[k] || []).push(e);
       });
 
-      container.innerHTML = '';
+      list.innerHTML = '';
+      for (const [type, items] of Object.entries(groups)) {
+        const section = document.createElement('div');
+        section.className = 'category';
+        section.innerHTML = `<div class="category-label">${TYPES[type] || 'Other'}</div>`;
 
-      Object.entries(groups).forEach(([type, items]) => {
-        const cfg = TYPE_CONFIG[type] || TYPE_CONFIG.other;
-        const cat = document.createElement('div');
-        cat.className = 'category';
+        for (const e of items) {
+          const el = document.createElement('div');
+          el.className = 'entry' + (e.file === activeFile ? ' active' : '');
+          el.dataset.file = e.file;
+          el.innerHTML = `<div class="entry-title">${x(e.title)}</div><div class="entry-date">${x(fmt(e.date))}</div>`;
+          el.addEventListener('click', () => open(e));
+          section.appendChild(el);
+        }
+        list.appendChild(section);
+      }
 
-        const label = document.createElement('div');
-        label.className = 'category-label';
-        label.innerHTML = `<span>${cfg.icon}</span><span>${cfg.label}</span>`;
-        cat.appendChild(label);
-
-        items.forEach(entry => {
-          const div = document.createElement('div');
-          div.className = 'entry' + (entry.file === activeFile ? ' active' : '');
-          div.dataset.file = entry.file;
-          div.innerHTML = `
-            <div class="entry-title">${escHtml(entry.title)}</div>
-            <div class="entry-date">${escHtml(entry.date || '')}</div>
-          `;
-          div.addEventListener('click', () => loadEntry(entry));
-          cat.appendChild(div);
-        });
-
-        container.appendChild(cat);
-      });
-
-      // If active file no longer in entries, clear
       if (activeFile && !entries.find(e => e.file === activeFile)) {
         activeFile = null;
         showEmpty();
       }
     }
 
-    function loadEntry(entry) {
-      activeFile = entry.file;
-
-      document.querySelectorAll('.entry').forEach(el => {
-        el.classList.toggle('active', el.dataset.file === entry.file);
-      });
-
+    function open(e) {
+      activeFile = e.file;
+      document.querySelectorAll('.entry').forEach(el =>
+        el.classList.toggle('active', el.dataset.file === e.file)
+      );
       const frame = document.getElementById('page-frame');
-      const empty = document.getElementById('empty-state');
-
-      frame.src = 'pages/' + entry.file;
+      frame.src = 'pages/' + e.file;
       frame.style.display = 'block';
-      empty.style.display = 'none';
+      document.getElementById('empty-state').style.display = 'none';
     }
 
     function showEmpty() {
@@ -294,15 +361,23 @@
       document.getElementById('empty-state').style.display = 'flex';
     }
 
-    function escHtml(str) {
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+    function flash() {
+      const p = document.getElementById('pulse');
+      p.classList.add('on');
+      setTimeout(() => p.classList.remove('on'), 500);
     }
 
-    // Initial load + auto-refresh
+    function fmt(s) {
+      if (!s) return '';
+      try {
+        return new Date(s + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      } catch { return s; }
+    }
+
+    function x(s) {
+      return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
     loadManifest();
     setInterval(loadManifest, 30000);
   </script>
