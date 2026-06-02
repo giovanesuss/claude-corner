@@ -148,21 +148,35 @@
     }
 
     .entry:hover .entry-title,
-    .entry.active .entry-title {
-      color: var(--text-1);
-    }
+    .entry.active .entry-title { color: var(--text-1); }
 
     .entry.active .entry-title { font-weight: 500; }
+
+    .entry-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+    }
 
     .entry-date {
       font-size: 10px;
       font-weight: 300;
       color: var(--text-3);
-      margin-top: 2px;
+    }
+
+    .entry-ext {
+      font-family: 'SF Mono', 'Cascadia Code', monospace;
+      font-size: 9px;
+      color: var(--text-3);
+      background: var(--border-light);
+      padding: 1px 4px;
+      border-radius: 2px;
+      letter-spacing: 0.3px;
     }
 
     .no-entries {
-      padding: 20px 20px;
+      padding: 20px;
       font-size: 12px;
       font-weight: 300;
       color: var(--text-3);
@@ -198,7 +212,7 @@
 
     .pulse.on { background: var(--accent); }
 
-    /* ─── Content ─────────────────────────────────────── */
+    /* ─── Content area ────────────────────────────────── */
 
     #content {
       flex: 1;
@@ -208,12 +222,22 @@
     }
 
     #page-frame {
+      display: none;
       width: 100%;
       height: 100%;
       border: none;
-      display: none;
-      background: #fff;
     }
+
+    #page-rendered {
+      display: none;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding: 52px 64px;
+    }
+
+    #page-rendered::-webkit-scrollbar { width: 4px; }
+    #page-rendered::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
     #empty-state {
       position: absolute;
@@ -245,6 +269,174 @@
       line-height: 1.7;
       max-width: 200px;
     }
+
+    /* ─── Markdown body ───────────────────────────────── */
+
+    .md-body {
+      max-width: 680px;
+      margin: 0 auto;
+      font-size: 15px;
+      line-height: 1.78;
+      color: var(--text-1);
+    }
+
+    .md-body h1 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 36px;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin: 0 0 32px;
+    }
+
+    .md-body h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 24px;
+      color: var(--text-1);
+      margin: 44px 0 16px;
+    }
+
+    .md-body h3 {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin: 36px 0 14px;
+    }
+
+    .md-body h4, .md-body h5, .md-body h6 {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-2);
+      margin: 28px 0 10px;
+    }
+
+    .md-body p { margin: 0 0 20px; }
+
+    .md-body strong { font-weight: 500; color: var(--text-1); }
+
+    .md-body em { font-style: italic; color: var(--text-2); }
+
+    .md-body a { color: var(--accent); text-decoration: none; }
+    .md-body a:hover { text-decoration: underline; }
+
+    .md-body blockquote {
+      border-left: 2px solid var(--accent);
+      padding: 4px 0 4px 20px;
+      margin: 0 0 20px;
+      color: var(--text-2);
+      font-style: italic;
+    }
+
+    .md-body code {
+      font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 12.5px;
+      background: var(--sidebar-bg);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--text-2);
+    }
+
+    .md-body pre {
+      background: var(--sidebar-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 20px;
+      overflow-x: auto;
+      margin: 0 0 24px;
+    }
+
+    .md-body pre code {
+      background: none;
+      padding: 0;
+      font-size: 12.5px;
+      line-height: 1.65;
+    }
+
+    .md-body ul, .md-body ol {
+      padding-left: 24px;
+      margin: 0 0 20px;
+    }
+
+    .md-body li { margin: 5px 0; }
+
+    .md-body hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    .md-body table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 0 0 24px;
+      font-size: 13.5px;
+    }
+
+    .md-body th {
+      text-align: left;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
+      color: var(--text-2);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .md-body td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .md-body img {
+      max-width: 100%;
+      border-radius: 4px;
+      margin: 8px 0;
+    }
+
+    /* ─── Raw / code / ascii / txt ────────────────────── */
+
+    .raw-body {
+      font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-2);
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ─── SVG ─────────────────────────────────────────── */
+
+    .svg-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
+    }
+
+    .svg-body svg {
+      max-width: 100%;
+      max-height: calc(100vh - 104px);
+    }
+
+    /* ─── JSON ────────────────────────────────────────── */
+
+    .json-body {
+      font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: var(--text-2);
+      white-space: pre-wrap;
+      max-width: 900px;
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body>
@@ -271,7 +463,8 @@
       <div class="empty-wordmark">Corner</div>
       <div class="empty-sub">Select a creation from the sidebar, or wait for the next session.</div>
     </div>
-    <iframe id="page-frame" title="Corner creation"></iframe>
+    <iframe id="page-frame" title="Corner creation" sandbox="allow-scripts allow-same-origin"></iframe>
+    <div id="page-rendered"></div>
   </main>
 
   <script>
@@ -280,6 +473,7 @@
       writing:     'Writing',
       simulation:  'Simulations',
       interactive: 'Interactive',
+      animation:   'Animations',
       cartography: 'Cartography',
       art:         'Art',
       code:        'Code',
@@ -287,8 +481,24 @@
       other:       'Other',
     };
 
+    // file extension → render mode
+    const EXT_MODE = {
+      html: 'iframe', htm: 'iframe',
+      md: 'markdown', markdown: 'markdown',
+      txt: 'raw', text: 'raw', ascii: 'raw', log: 'raw', asc: 'raw',
+      js: 'animation', mjs: 'animation',
+      svg: 'svg',
+      json: 'json',
+      // code as raw text
+      py: 'raw', sh: 'raw', bash: 'raw', css: 'raw',
+      ts: 'raw', rs: 'raw', go: 'raw', rb: 'raw',
+      cpp: 'raw', c: 'raw', lua: 'raw', r: 'raw',
+    };
+
     let entries = [];
-    let activeFile = null;
+    let activeKey = null;
+
+    // ── Manifest ───────────────────────────────────────
 
     async function loadManifest() {
       flash();
@@ -303,6 +513,8 @@
         document.getElementById('entry-count').textContent = 'No pages yet';
       }
     }
+
+    // ── Sidebar ────────────────────────────────────────
 
     function render() {
       const list  = document.getElementById('sidebar-entries');
@@ -329,35 +541,145 @@
         section.innerHTML = `<div class="category-label">${TYPES[type] || 'Other'}</div>`;
 
         for (const e of items) {
+          const key = getKey(e);
+          const ext = getExt(e);
           const el = document.createElement('div');
-          el.className = 'entry' + (e.file === activeFile ? ' active' : '');
-          el.dataset.file = e.file;
-          el.innerHTML = `<div class="entry-title">${x(e.title)}</div><div class="entry-date">${x(fmt(e.date))}</div>`;
+          el.className = 'entry' + (key === activeKey ? ' active' : '');
+          el.dataset.key = key;
+          el.innerHTML = `
+            <div class="entry-title">${x(e.title)}</div>
+            <div class="entry-meta">
+              <span class="entry-date">${x(fmt(e.date))}</span>
+              ${ext ? `<span class="entry-ext">.${x(ext)}</span>` : ''}
+            </div>`;
           el.addEventListener('click', () => open(e));
           section.appendChild(el);
         }
         list.appendChild(section);
       }
 
-      if (activeFile && !entries.find(e => e.file === activeFile)) {
-        activeFile = null;
+      if (activeKey && !entries.find(e => getKey(e) === activeKey)) {
+        activeKey = null;
         showEmpty();
       }
     }
 
-    function open(e) {
-      activeFile = e.file;
-      document.querySelectorAll('.entry').forEach(el =>
-        el.classList.toggle('active', el.dataset.file === e.file)
-      );
-      const frame = document.getElementById('page-frame');
-      frame.src = 'pages/' + e.file;
-      frame.style.display = 'block';
+    // ── Open & render ──────────────────────────────────
+
+    async function open(e) {
+      const url = getUrl(e);
+      if (!url) return;
+
+      const ext  = getExt(e);
+      const mode = EXT_MODE[ext] || 'raw';
+
+      setActive(getKey(e));
+      hideAll();
+
+      try {
+        if (mode === 'iframe') {
+          const frame = document.getElementById('page-frame');
+          frame.removeAttribute('srcdoc');
+          frame.src = url;
+          frame.style.display = 'block';
+
+        } else if (mode === 'markdown') {
+          await ensureMarked();
+          const text = await fetch(url + '?_=' + Date.now()).then(r => r.text());
+          const div  = document.getElementById('page-rendered');
+          div.innerHTML = `<div class="md-body">${marked.parse(text)}</div>`;
+          div.style.display = 'block';
+
+        } else if (mode === 'animation') {
+          const code  = await fetch(url + '?_=' + Date.now()).then(r => r.text());
+          const frame = document.getElementById('page-frame');
+          frame.removeAttribute('src');
+          frame.srcdoc = wrapAnimation(code);
+          frame.style.display = 'block';
+
+        } else if (mode === 'svg') {
+          const svg = await fetch(url + '?_=' + Date.now()).then(r => r.text());
+          const div = document.getElementById('page-rendered');
+          div.innerHTML = `<div class="svg-body">${svg}</div>`;
+          div.style.display = 'block';
+
+        } else if (mode === 'json') {
+          const raw = await fetch(url + '?_=' + Date.now()).then(r => r.text());
+          const div = document.getElementById('page-rendered');
+          try {
+            div.innerHTML = `<pre class="json-body">${x(JSON.stringify(JSON.parse(raw), null, 2))}</pre>`;
+          } catch {
+            div.innerHTML = `<pre class="raw-body">${x(raw)}</pre>`;
+          }
+          div.style.display = 'block';
+
+        } else {
+          // raw: txt, ascii, log, code files, etc.
+          const text = await fetch(url + '?_=' + Date.now()).then(r => r.text());
+          const div  = document.getElementById('page-rendered');
+          div.innerHTML = `<pre class="raw-body">${x(text)}</pre>`;
+          div.style.display = 'block';
+        }
+      } catch (err) {
+        const div = document.getElementById('page-rendered');
+        div.innerHTML = `<pre class="raw-body">Could not load: ${x(url)}</pre>`;
+        div.style.display = 'block';
+      }
+
       document.getElementById('empty-state').style.display = 'none';
     }
 
+    // ── Helpers ────────────────────────────────────────
+
+    function wrapAnimation(code) {
+      const escaped = code.replace(/<\/script>/gi, '<\\/script>');
+      return `<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#191714;overflow:hidden}canvas{display:block}</style>
+</head><body>
+<canvas id="canvas"></canvas>
+<script>
+const canvas=document.getElementById('canvas');
+const ctx=canvas.getContext('2d');
+function _resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+_resize();
+window.addEventListener('resize',_resize);
+${escaped}
+<\/script>
+</body></html>`;
+    }
+
+    function getUrl(e) {
+      if (e.folder && e.entry) return `pages/${e.folder}/${e.entry}`;
+      if (e.file) return `pages/${e.file}`;      // legacy flat format
+      return null;
+    }
+
+    function getKey(e) { return e.folder || e.file || ''; }
+
+    function getExt(e) {
+      const url = getUrl(e);
+      if (!url) return '';
+      const parts = url.split('.');
+      return parts.length > 1 ? parts.pop().toLowerCase() : '';
+    }
+
+    function setActive(key) {
+      activeKey = key;
+      document.querySelectorAll('.entry').forEach(el =>
+        el.classList.toggle('active', el.dataset.key === key)
+      );
+    }
+
+    function hideAll() {
+      const frame = document.getElementById('page-frame');
+      frame.style.display = 'none';
+      frame.removeAttribute('srcdoc');
+      document.getElementById('page-rendered').style.display = 'none';
+    }
+
     function showEmpty() {
-      document.getElementById('page-frame').style.display = 'none';
+      hideAll();
       document.getElementById('empty-state').style.display = 'flex';
     }
 
@@ -375,7 +697,18 @@
     }
 
     function x(s) {
-      return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    async function ensureMarked() {
+      if (typeof marked !== 'undefined') return;
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+        s.onload = resolve;
+        s.onerror = () => reject(new Error('Could not load marked.js — check internet connection'));
+        document.head.appendChild(s);
+      });
     }
 
     loadManifest();
