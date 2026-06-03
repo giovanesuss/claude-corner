@@ -24,6 +24,11 @@ Then activate inside Claude Code:
 | `/corner:status` | Show what Claude created |
 | `/corner:uninstall` | Deactivate and clean up |
 
+## Update
+```bash
+claude plugin update corner@claude-corner
+```
+
 ## Uninstall
 
 ```
