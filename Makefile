@@ -3,8 +3,10 @@ CORNER_DIR   := $(HOME)/claude-corner
 SETTINGS     := $(HOME)/.claude/settings.json
 HOOK_CMD     := $(PLUGIN_ROOT)/hooks/corner-trigger.sh
 GLOBAL_CMDS  := $(HOME)/.claude/commands/corner
+TEST_SERVE   := $(PLUGIN_ROOT)/tests/.serve
+TEST_PORT    := 8743
 
-.PHONY: help install uninstall test status
+.PHONY: help install uninstall test test-hook status
 
 help:
 	@echo ""
@@ -12,7 +14,8 @@ help:
 	@echo ""
 	@echo "  make install    disponibiliza o plugin (comandos globais + hook executável)"
 	@echo "  make uninstall  remove tudo que o install criou"
-	@echo "  make test       testa o hook e dispara uma sessão curta"
+	@echo "  make test       abre o viewer com fixtures de teste no browser"
+	@echo "  make test-hook  testa o hook e dispara uma sessão curta"
 	@echo "  make status     mostra o estado atual da instalação"
 	@echo ""
 	@echo "  Após 'make install', abra o Claude Code e rode /corner:setup para ativar."
@@ -71,6 +74,27 @@ open(path, 'w').write(json.dumps(s, indent=2))" 2>/dev/null \
 # ─── test ─────────────────────────────────────────────────────────────────────
 
 test:
+	@echo "🖥️  Montando ambiente de testes..."
+	@rm -rf $(TEST_SERVE)
+	@mkdir -p $(TEST_SERVE)/pages
+	@cp templates/index.html $(TEST_SERVE)/
+	@cp -r templates/assets $(TEST_SERVE)/
+	@cp -r tests/fixtures/pages/. $(TEST_SERVE)/pages/
+	@echo "  ✓ Fixtures prontos (6 casos de teste)"
+	@echo ""
+	@PORT=$(TEST_PORT); \
+	python3 -m http.server $$PORT --directory $(TEST_SERVE) 2>/dev/null & \
+	SERVER_PID=$$!; \
+	sleep 0.4; \
+	xdg-open "http://localhost:$$PORT" 2>/dev/null || open "http://localhost:$$PORT" 2>/dev/null || true; \
+	echo "  Servidor em http://localhost:$$PORT"; \
+	echo "  Pressione Enter para encerrar..."; \
+	read _; \
+	kill $$SERVER_PID 2>/dev/null; \
+	rm -rf $(TEST_SERVE); \
+	echo "  ✓ Encerrado."
+
+test-hook:
 	@echo "🧪 Testando hook..."
 	@CLAUDE_PLUGIN_ROOT=$(PLUGIN_ROOT) bash $(HOOK_CMD) && echo "  ✓ Hook ok" || echo "  ✗ Hook falhou"
 

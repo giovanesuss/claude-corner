@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #191714; color: #e8e0d5; font-family: Georgia, serif; padding: 2rem; line-height: 1.7; }
+  .badge { color: #34d399; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  h1 { font-size: 1.75rem; font-weight: normal; margin-bottom: 1.25rem; }
+  .tabs-expected { background: #2a2520; border: 1px solid #3a3530; border-radius: 6px; padding: 1rem 1.25rem; }
+  .tabs-expected li { color: #9e9590; font-size: 0.875rem; padding: 0.2rem 0; list-style: none; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+</style>
+</head>
+<body>
+  <div class="badge">TEST · multi-format · 4 files</div>
+  <h1>Multi-Format Entry</h1>
+  <p style="color:#9e9590; margin-bottom:1.25rem">Four files, four renderers. Tab bar should show all four with correct colored dots.</p>
+  <div class="tabs-expected">
+    <ul>
+      <li><span class="dot" style="background:#e67e22"></span>index.html — iframe</li>
+      <li><span class="dot" style="background:#f0b429"></span>sketch.js — animation (canvas)</li>
+      <li><span class="dot" style="background:#f472b6"></span>style.css — raw</li>
+      <li><span class="dot" style="background:#4a9edd"></span>notes.md — markdown</li>
+    </ul>
+  </div>
+</body>
+</html>

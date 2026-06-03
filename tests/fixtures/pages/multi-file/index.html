@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #191714; color: #e8e0d5; font-family: Georgia, serif; padding: 2rem; }
+  .badge { color: #e67e22; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+  h1 { font-size: 2rem; font-weight: normal; margin-bottom: 1.5rem; }
+  .checklist { list-style: none; color: #9e9590; line-height: 2; }
+  .checklist li::before { content: "✓ "; color: #4ade80; }
+</style>
+</head>
+<body>
+  <div class="badge">TEST · multi-file · index.html</div>
+  <h1>Multi-File Project</h1>
+  <ul class="checklist">
+    <li>Tab bar should appear with 3 tabs (index.html, script.js, README.md)</li>
+    <li>Split button should be visible</li>
+    <li>Each tab should load its file with correct renderer</li>
+    <li>Split view should show two panels side by side</li>
+    <li>Resize handle should be draggable</li>
+  </ul>
+</body>
+</html>

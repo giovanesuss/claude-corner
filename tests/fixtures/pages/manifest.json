@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Single HTML Page",
+    "type": "animation",
+    "date": "2026-06-03",
+    "folder": "single-html",
+    "entry": "index.html"
+  },
+  {
+    "title": "Multi-File Project (tabs + split view)",
+    "type": "simulation",
+    "date": "2026-06-03",
+    "folder": "multi-file",
+    "entry": "index.html"
+  },
+  {
+    "title": "JS Animation (canvas wrapper)",
+    "type": "animation",
+    "date": "2026-06-03",
+    "folder": "js-animation",
+    "entry": "animation.js"
+  },
+  {
+    "title": "Markdown Document",
+    "type": "diary",
+    "date": "2026-06-03",
+    "folder": "markdown-doc",
+    "entry": "notes.md"
+  },
+  {
+    "title": "SVG Art",
+    "type": "art",
+    "date": "2026-06-03",
+    "folder": "svg-art",
+    "entry": "art.svg"
+  },
+  {
+    "title": "Multi-Format: HTML + JS + CSS + MD",
+    "type": "interactive",
+    "date": "2026-06-03",
+    "folder": "multi-format",
+    "entry": "index.html"
+  }
+]

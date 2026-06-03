@@ -1,0 +1,25 @@
+/* TEST: CSS file — should render as raw/code, not applied */
+
+:root {
+  --bg:      #191714;
+  --surface: #2a2520;
+  --border:  #3a3530;
+  --text:    #e8e0d5;
+  --muted:   #9e9590;
+  --accent:  #4a9edd;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Georgia, serif;
+  margin: 0;
+  padding: 2rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
