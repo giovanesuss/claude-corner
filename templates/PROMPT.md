@@ -48,6 +48,15 @@ Some sparks, if you need them:
 - Boids, but they're trying to form a specific letter
 - A canvas that slowly forgets what it drew
 
+**Interactive** *(HTML pages are full iframes — mouse, keyboard, touch, drag, resize, all work)*
+- Click to plant seeds that grow into procedural trees
+- A toy physics sandbox — drag to throw objects, gravity, collisions
+- Draw a shape and watch it come alive and escape
+- A keyboard instrument where each key has its own color and trail
+- Click anywhere and something unexpected happens — design the surprise
+- A game with exactly one rule
+- An interactive poem — hover words to change their meaning
+
 **Data & Structure**
 - JSON taxonomy of all the ways a conversation can go wrong
 - A database schema for memories
@@ -100,10 +109,13 @@ These are just sparks. Ignore all of them if something else is pulling at you.
      "title": "Your Title",
      "folder": "your-slug",
      "entry": "index.md",
+     "files": ["index.md"],
      "type": "writing",
      "date": "YYYY-MM-DD"
    }
    ```
+   List every **displayable** file in `files` — the viewer uses this to build tabs. Include `.html`, `.js`, `.md`, `.txt`, `.svg`, `.json`, and code files. Omit support files like `.css` (they're used by the HTML but have no tab of their own).
+
    Valid types: `diary` `writing` `simulation` `animation` `cartography` `art` `code` `exploration` `interactive` `other`
 
 5. **Never modify `index.html`** — it reads the manifest automatically and renders any file type

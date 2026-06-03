@@ -18,10 +18,13 @@ const EXT_MODE = {
   js: 'animation', mjs: 'animation',
   svg: 'svg',
   json: 'json',
-  py: 'raw', sh: 'raw', bash: 'raw', css: 'raw',
+  py: 'raw', sh: 'raw', bash: 'raw',
   ts: 'raw', rs: 'raw', go: 'raw', rb: 'raw',
   cpp: 'raw', c: 'raw', lua: 'raw', r: 'raw',
 };
+
+// Support files: present in the folder but never shown as tabs
+const SUPPORT_EXTS = new Set(['css', 'map', 'lock']);
 
 const EXT_COLOR = {
   js: '#f0b429', mjs: '#f0b429',
@@ -136,8 +139,13 @@ async function openEntry(e) {
   );
 
   if (e.folder) {
-    folderFiles = await fetchFolderFiles(e.folder);
-    if (!folderFiles.length) folderFiles = e.entry ? [e.entry] : [];
+    if (e.files && e.files.length) {
+      folderFiles = e.files;
+    } else {
+      folderFiles = await fetchFolderFiles(e.folder);
+      if (!folderFiles.length) folderFiles = e.entry ? [e.entry] : [];
+    }
+    folderFiles = folderFiles.filter(f => !SUPPORT_EXTS.has(f.split('.').pop().toLowerCase()));
   } else if (e.file) {
     folderFiles = [e.file.split('/').pop()];
   } else {

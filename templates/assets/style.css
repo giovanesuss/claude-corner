@@ -430,6 +430,8 @@ body {
 
 /* ─── Resize handle ───────────────────────────────── */
 
+#panel-b { display: none; }
+
 #resize-handle {
   display: none;
   width: 5px;

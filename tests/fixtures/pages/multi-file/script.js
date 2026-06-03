@@ -1,9 +1,7 @@
 // TEST: JS file inside multi-file folder
 // Should render as animation (canvas wrapper), not raw code
 // because EXT_MODE maps .js → 'animation'
-
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+// canvas, ctx, and _resize() are pre-wired by the wrapper — don't redeclare them
 
 let t = 0;
 function draw() {

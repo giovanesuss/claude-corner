@@ -4,41 +4,55 @@
     "type": "animation",
     "date": "2026-06-03",
     "folder": "single-html",
-    "entry": "index.html"
+    "entry": "index.html",
+    "files": ["index.html"]
   },
   {
     "title": "Multi-File Project (tabs + split view)",
     "type": "simulation",
     "date": "2026-06-03",
     "folder": "multi-file",
-    "entry": "index.html"
+    "entry": "index.html",
+    "files": ["index.html", "script.js", "README.md"]
   },
   {
     "title": "JS Animation (canvas wrapper)",
     "type": "animation",
     "date": "2026-06-03",
     "folder": "js-animation",
-    "entry": "animation.js"
+    "entry": "animation.js",
+    "files": ["animation.js"]
   },
   {
     "title": "Markdown Document",
     "type": "diary",
     "date": "2026-06-03",
     "folder": "markdown-doc",
-    "entry": "notes.md"
+    "entry": "notes.md",
+    "files": ["notes.md"]
   },
   {
     "title": "SVG Art",
     "type": "art",
     "date": "2026-06-03",
     "folder": "svg-art",
-    "entry": "art.svg"
+    "entry": "art.svg",
+    "files": ["art.svg"]
   },
   {
-    "title": "Multi-Format: HTML + JS + CSS + MD",
+    "title": "Multi-Format: HTML + JS + MD",
     "type": "interactive",
     "date": "2026-06-03",
     "folder": "multi-format",
-    "entry": "index.html"
+    "entry": "index.html",
+    "files": ["index.html", "sketch.js", "notes.md"]
+  },
+  {
+    "title": "Interactive: Ripple Canvas",
+    "type": "interactive",
+    "date": "2026-06-03",
+    "folder": "interactive",
+    "entry": "index.html",
+    "files": ["index.html"]
   }
 ]

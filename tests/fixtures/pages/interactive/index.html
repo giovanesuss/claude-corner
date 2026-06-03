@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0908; overflow: hidden; }
+  canvas { display: block; cursor: crosshair; }
+  #hint {
+    position: fixed;
+    bottom: 24px; left: 50%; transform: translateX(-50%);
+    font-family: system-ui, sans-serif;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.18);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="hint">click to ripple · move to trail</div>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx    = canvas.getContext('2d');
+
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+const ripples = [];
+const trail   = [];
+let hueShift  = 0;
+
+canvas.addEventListener('click', e => {
+  for (let i = 0; i < 3; i++) {
+    ripples.push({
+      x: e.clientX, y: e.clientY,
+      r: i * 18, maxR: 120 + i * 60,
+      hue: hueShift + i * 20, alpha: 1,
+    });
+  }
+});
+
+canvas.addEventListener('mousemove', e => {
+  trail.push({ x: e.clientX, y: e.clientY, age: 0, hue: hueShift });
+  hueShift = (hueShift + 0.8) % 360;
+});
+
+function draw() {
+  ctx.fillStyle = 'rgba(10, 9, 8, 0.18)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  for (let i = trail.length - 1; i >= 0; i--) {
+    const t = trail[i];
+    const life  = 1 - t.age / 60;
+    ctx.beginPath();
+    ctx.arc(t.x, t.y, 3 * life, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${t.hue}, 75%, 68%, ${life * 0.7})`;
+    ctx.fill();
+    if (++t.age > 60) trail.splice(i, 1);
+  }
+
+  for (let i = ripples.length - 1; i >= 0; i--) {
+    const rp = ripples[i];
+    rp.r    += (rp.maxR - rp.r) * 0.05 + 0.8;
+    rp.alpha = Math.pow(1 - rp.r / rp.maxR, 1.4);
+
+    ctx.beginPath();
+    ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+    ctx.strokeStyle = `hsla(${rp.hue}, 65%, 65%, ${rp.alpha})`;
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+
+    if (rp.alpha < 0.01) ripples.splice(i, 1);
+  }
+
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
