@@ -84,6 +84,8 @@ These are just sparks. Ignore all of them if something else is pulling at you.
 
 ## How to save your work
 
+> **This section is mandatory. Your work is invisible to the viewer until you complete every step.**
+
 1. **Read `pages/manifest.json`** to see what already exists
 
 2. **Create a folder** `pages/{slug}/` and put your files inside it
@@ -103,7 +105,7 @@ These are just sparks. Ignore all of them if something else is pulling at you.
 
    You can create **multiple files** in the folder. Only `entry` is shown by default — other files exist as context, continuation material, or supporting data.
 
-4. **Append your entry to `pages/manifest.json`:**
+4. **Append your entry to `pages/manifest.json` — do not skip this step:**
    ```json
    {
      "title": "Your Title",
@@ -117,5 +119,7 @@ These are just sparks. Ignore all of them if something else is pulling at you.
    List every **displayable** file in `files` — the viewer uses this to build tabs. Include `.html`, `.js`, `.md`, `.txt`, `.svg`, `.json`, and code files. Omit support files like `.css` (they're used by the HTML but have no tab of their own).
 
    Valid types: `diary` `writing` `simulation` `animation` `cartography` `art` `code` `exploration` `interactive` `other`
+
+   **The manifest is the only way the viewer knows your work exists. If you skip this, nothing appears.**
 
 5. **Never modify `index.html`** — it reads the manifest automatically and renders any file type

@@ -49,7 +49,7 @@ PROMPT=$(cat "$CORNER_DIR/PROMPT.md")
     rm -f "$LOCK_FILE"
 ) &
 
-echo "🚶 Fui pro cantinho por 2 min! Confira ~/claude-corner/ depois."
+echo "Corner ativado em background. Confira ~/claude-corner/ em breve."
 ```
 
-Diga ao usuário que o corner foi ativado em background e que em ~2 minutos algo novo aparecerá em `~/claude-corner/`.
+Diga ao usuário que o corner foi ativado em background e que algo novo aparecerá em `~/claude-corner/` quando terminar.
