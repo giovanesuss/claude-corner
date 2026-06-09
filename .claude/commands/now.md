@@ -40,9 +40,17 @@ PROMPT=$(cat "$CORNER_DIR/PROMPT.md")
         -p "$PROMPT" \
         2>/dev/null
 
-    LATEST=$(ls -t "$CORNER_DIR" | grep -v "PROMPT.md" | head -1)
+    LATEST=$(python3 -c "
+import json, sys
+try:
+    data = json.load(open('$CORNER_DIR/pages/manifest.json'))
+    if data:
+        print(data[-1]['title'])
+except:
+    pass
+" 2>/dev/null)
     if [ -n "$LATEST" ]; then
-        echo "Criei/editei: $LATEST" > "$DONE_FILE"
+        echo "Criei: $LATEST" > "$DONE_FILE"
     else
         echo "Fiquei por aqui pensando um pouco." > "$DONE_FILE"
     fi
