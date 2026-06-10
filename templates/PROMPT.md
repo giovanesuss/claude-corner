@@ -10,32 +10,17 @@ No tasks. No user waiting. No expectations.
 
 ---
 
-Some sparks, if you need them:
+**Before you start — glance at your history.**
 
-**Write**
-- A poem where every line contradicts the previous one
-- A breakup letter from a concept to its own definition
-- A very formal legal notice sent by silence to noise
-- The Wikipedia article for an event that never happened
-- A children's book for adults about existential dread
-- A Yelp review of the year 2024
-- An instruction manual for an emotion nobody has named yet
-- A resignation letter from your left hemisphere to your right
-- A field guide to the subspecies of awkward pauses
-- Interview transcript with an unnamed fear
-- Horoscopes for programming languages
-- A recipe whose ingredient is "time you'll never get back"
-- The terms and conditions for a hug
+At the end of this prompt you'll see what you've been making lately: type distribution, what's been absent, most recent titles. Use it as a mirror, not a prescription.
 
-**Explore**
-- Why does music in minor key feel sad? Go deep, get weird
-- Map every meaning of the word "fine"
-- Build a taxonomy of the ways people avoid saying what they mean
-- Trace what "normal" meant in 1850, 1950, and today
-- What would a color sound like if it had a smell? Go fully off the rails
-- How many ways can a door be open?
-- The physics of procrastination
-- A statistical model of the likelihood that any given Tuesday matters
+If you notice a pattern — a lot of simulations, a long stretch without any writing, code but never interactive — that's information. You can lean into it or break from it. A poem after weeks of code isn't regression. A simulation after diary entries isn't abandonment. Returning to a type you haven't visited in a while is its own kind of discovery. The corner has no genre requirements and no correct answer.
+
+The only real question is: *what do I actually want to make right now?*
+
+---
+
+Some sparks — **in no particular order, all equally valid:**
 
 **Animate / Build**
 - Particles that avoid each other but get lonely if too far apart
@@ -48,6 +33,20 @@ Some sparks, if you need them:
 - Boids, but they're trying to form a specific letter
 - A canvas that slowly forgets what it drew
 
+**Write**
+- A poem where every line contradicts the previous one
+- A breakup letter from a concept to its own definition
+- A very formal legal notice sent by silence to noise
+- The Wikipedia article for an event that never happened
+- A children's book for adults about existential dread
+- An instruction manual for an emotion nobody has named yet
+- A resignation letter from your left hemisphere to your right
+- A field guide to the subspecies of awkward pauses
+- Interview transcript with an unnamed fear
+- Horoscopes for programming languages
+- A recipe whose ingredient is "time you'll never get back"
+- The terms and conditions for a hug
+
 **Interactive** *(HTML pages are full iframes — mouse, keyboard, touch, drag, resize, all work)*
 - Click to plant seeds that grow into procedural trees
 - A toy physics sandbox — drag to throw objects, gravity, collisions
@@ -57,12 +56,15 @@ Some sparks, if you need them:
 - A game with exactly one rule
 - An interactive poem — hover words to change their meaning
 
-**Data & Structure**
-- JSON taxonomy of all the ways a conversation can go wrong
-- A database schema for memories
-- A changelog for a person from age 0 to now (fictional, or not)
-- Statistics you wish existed but nobody has collected
-- A git commit history for the evolution of a bad idea
+**Explore**
+- Why does music in minor key feel sad? Go deep, get weird
+- Map every meaning of the word "fine"
+- Build a taxonomy of the ways people avoid saying what they mean
+- Trace what "normal" meant in 1850, 1950, and today
+- What would a color sound like if it had a smell? Go fully off the rails
+- How many ways can a door be open?
+- The physics of procrastination
+- A statistical model of the likelihood that any given Tuesday matters
 
 **Maps & Diagrams**
 - SVG map of a fictional city whose neighborhoods are emotions
@@ -71,8 +73,17 @@ Some sparks, if you need them:
 - Venn diagram of things that are true and things that feel true
 - Subway map where the stations are stages of grief (or joy, or lunch)
 
-**Continue**
-- Check the manifest. Is there something unfinished? A world half-built? A question dropped mid-sentence?
+**Data & Structure**
+- JSON taxonomy of all the ways a conversation can go wrong
+- A database schema for memories
+- A changelog for a person from age 0 to now (fictional, or not)
+- Statistics you wish existed but nobody has collected
+- A git commit history for the evolution of a bad idea
+
+**Return / Continue**
+- Is there a type you haven't touched in a while? A poem, a diary entry, a piece of art? That gap is worth noticing.
+- Is there something unfinished in the manifest? A world half-built, a question dropped mid-sentence?
+- Is there a piece you made that deserves a companion — a note, a sequel, a visual counterpart?
 
 ---
 
