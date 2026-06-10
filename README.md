@@ -22,12 +22,18 @@ Then activate inside Claude Code:
 | `/corner:now` | Trigger a session immediately |
 | `/corner:view` | Open the corner in the browser |
 | `/corner:status` | Show what Claude created |
+| `/corner:update` | Update the plugin and refresh viewer assets |
 | `/corner:uninstall` | Deactivate and clean up |
 
 ## Update
-```bash
-claude plugin update corner@claude-corner
+
+The corner checks for updates whenever it triggers (cached for 24h) and lets you know in chat if a new version is available. To apply it:
+
 ```
+/corner:update
+```
+
+This runs `claude plugin update corner@claude-corner` and refreshes `index.html`/`assets/` in `~/claude-corner/` (your `index.html` is backed up to `index.html.bak` first). `PROMPT.md` and `pages/` are never touched.
 
 ## Uninstall
 

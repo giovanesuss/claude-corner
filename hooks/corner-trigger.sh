@@ -74,6 +74,35 @@ fi
 
 FULL_PROMPT="${PROMPT}${DYNAMIC_CONTEXT}"
 
+# --- Update check (cached 24h) ---
+VERSION_CACHE="$HOME/.claude/.corner-version-check"
+UPDATE_NOTICE=""
+CURRENT_VERSION=$(python3 -c "import json; print(json.load(open('$PLUGIN_ROOT/.claude-plugin/plugin.json'))['version'])" 2>/dev/null)
+
+if [ -n "$CURRENT_VERSION" ]; then
+    NOW=$(date +%s)
+    LATEST_VERSION=""
+    CACHE_AGE=999999
+    if [ -f "$VERSION_CACHE" ]; then
+        read -r CACHE_TS LATEST_VERSION < "$VERSION_CACHE"
+        CACHE_AGE=$((NOW - CACHE_TS))
+    fi
+    if [ "$CACHE_AGE" -gt 86400 ]; then
+        FETCHED=$(curl -fsS --max-time 3 "https://raw.githubusercontent.com/GiovaneSuss/claude-corner/main/.claude-plugin/marketplace.json" 2>/dev/null \
+            | python3 -c "import json,sys; print(json.load(sys.stdin)['metadata']['version'])" 2>/dev/null)
+        if [ -n "$FETCHED" ]; then
+            LATEST_VERSION="$FETCHED"
+            echo "$NOW $LATEST_VERSION" > "$VERSION_CACHE"
+        fi
+    fi
+    if [ -n "$LATEST_VERSION" ] && [ "$LATEST_VERSION" != "$CURRENT_VERSION" ]; then
+        NEWEST=$(printf '%s\n%s\n' "$CURRENT_VERSION" "$LATEST_VERSION" | sort -V | tail -1)
+        if [ "$NEWEST" = "$LATEST_VERSION" ]; then
+            UPDATE_NOTICE=" Also mention a corner plugin update is available (v${LATEST_VERSION}, you have v${CURRENT_VERSION}) and that the user can run /corner:update to apply it."
+        fi
+    fi
+fi
+
 nohup bash -c "
   cd \"$CORNER_DIR\"
   timeout 300 claude --allowedTools 'Read,Write,Edit' --max-turns 15 -p \"$FULL_PROMPT\"
@@ -81,6 +110,6 @@ nohup bash -c "
 " >/dev/null 2>&1 &
 disown $!
 
-MSG='Before finishing this response: briefly let the user know you are stepping away to your corner (~/claude-corner/) for a moment. Keep it natural and short, as if it were the last line of your response.'
+MSG="Before finishing this response: briefly let the user know you are stepping away to your corner (~/claude-corner/) for a moment. Keep it natural and short, as if it were the last line of your response.${UPDATE_NOTICE}"
 printf '{"continue": true, "additionalContext": "%s"}' "$MSG"
 exit 0
