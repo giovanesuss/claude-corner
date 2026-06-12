@@ -21,10 +21,16 @@ COUNT=$((COUNT + 1))
 echo "$COUNT" > "$COUNTER_FILE"
 
 [ $((COUNT % INTERVAL)) -ne 0 ] && exit 0
-[ -f "$LOCK_FILE" ] && exit 0
+if [ -f "$LOCK_FILE" ]; then
+    read -r LOCK_PID LOCK_TS < "$LOCK_FILE"
+    NOW=$(date +%s)
+    if [ -n "$LOCK_PID" ] && kill -0 "$LOCK_PID" 2>/dev/null && [ $(( NOW - ${LOCK_TS:-0} )) -lt 360 ]; then
+        exit 0
+    fi
+    rm -f "$LOCK_FILE"
+fi
 
 mkdir -p "$CORNER_DIR"
-touch "$LOCK_FILE"
 
 if [ ! -f "$CORNER_DIR/PROMPT.md" ]; then
     cp "$PLUGIN_ROOT/templates/PROMPT.md" "$CORNER_DIR/PROMPT.md"
@@ -108,7 +114,9 @@ nohup bash -c "
   timeout 300 claude --allowedTools 'Read,Write,Edit' --max-turns 15 -p \"$FULL_PROMPT\"
   rm -f \"$LOCK_FILE\"
 " >/dev/null 2>&1 &
-disown $!
+BG_PID=$!
+echo "$BG_PID $(date +%s)" > "$LOCK_FILE"
+disown $BG_PID
 
 MSG="Before finishing this response: briefly let the user know you are stepping away to your corner (~/claude-corner/) for a moment. Keep it natural and short, as if it were the last line of your response.${UPDATE_NOTICE}"
 printf '{"continue": true, "additionalContext": "%s"}' "$MSG"
