@@ -33,14 +33,14 @@ if [ ! -f "$CORNER_DIR/index.html" ]; then
 fi
 mkdir -p "$CORNER_DIR/pages"
 [ ! -f "$CORNER_DIR/pages/manifest.json" ] && echo "[]" > "$CORNER_DIR/pages/manifest.json"
-PROMPT=$(cat "$CORNER_DIR/PROMPT.md")
+FULL_PROMPT=$(bash "$PLUGIN_ROOT/hooks/corner-prompt.sh" "$CORNER_DIR")
 
 (
     cd "$CORNER_DIR"
     timeout 120 claude \
         --allowedTools "Read,Write,Edit" \
         --max-turns 15 \
-        -p "$PROMPT" \
+        -p "$FULL_PROMPT" \
         2>/dev/null
 
     LATEST=$(python3 -c "
