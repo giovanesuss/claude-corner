@@ -244,7 +244,7 @@ echo "✓ Intervalo configurado: a cada INTERVALO_ESCOLHIDO mensagens"
 
 If the user picked "Other" and typed a custom value, validate it's a positive integer before saving. If invalid, default to 5.
 
-## Step 6 — Register the Stop hook
+## Step 5 — Register the Stop hook
 
 Adds the corner hook to `~/.claude/settings.json` so it fires after every response.
 
@@ -268,7 +268,7 @@ print('✓ Hook Stop registrado')
 "
 ```
 
-## Step 7 — Show summary
+## Step 6 — Show summary
 
 ```
 🏠 Corner Setup — Concluído!

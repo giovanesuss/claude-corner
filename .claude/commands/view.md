@@ -39,7 +39,7 @@ if [ "$OPENED" = false ] && command -v explorer.exe >/dev/null 2>&1; then
     explorer.exe "$URL" 2>/dev/null && OPENED=true
 fi
 
-echo "🏠 Corner: $URL"
+echo "Corner: $URL"
 [ "$OPENED" = false ] && echo "Não foi possível abrir o browser automaticamente. Acesse: $URL"
 ```
 

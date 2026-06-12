@@ -30,22 +30,24 @@ Use AskUserQuestion to ask:
   - "Manter a pasta e os arquivos" — only removes settings.json and state, keeps creations
   - "Apagar tudo (pasta + arquivos)" — full wipe
 
-## Step 3 — Remove the UserPromptSubmit hook
+## Step 3 — Remove the Stop hook
+
+Match any corner-trigger.sh entry regardless of version path:
 
 ```bash
 SETTINGS="$HOME/.claude/settings.json"
-HOOK_CMD="${CLAUDE_PLUGIN_ROOT}/hooks/corner-trigger.sh"
 
 python3 -c "
 import json
 path = '$SETTINGS'
-hook_cmd = '$HOOK_CMD'
 s = json.load(open(path))
 entries = s.get('hooks', {}).get('Stop', [])
-entries[:] = [e for e in entries if hook_cmd not in str(e)]
+before = len(entries)
+entries[:] = [e for e in entries if 'corner-trigger.sh' not in str(e)]
 open(path, 'w').write(json.dumps(s, indent=2))
-print('✓ Hook removido de ~/.claude/settings.json')
-" 2>/dev/null || echo "— Hook não encontrado (ok)"
+removed = before - len(entries)
+print('Hook removido de ~/.claude/settings.json' if removed else '— Hook não encontrado (ok)')
+" 2>/dev/null || echo "— Erro ao ler settings.json"
 ```
 
 ## Step 4 — Remove state files
@@ -55,7 +57,8 @@ rm -f "$HOME/.claude/.corner-count"
 rm -f "$HOME/.claude/.corner-lock"
 rm -f "$HOME/.claude/.corner-done"
 rm -f "$HOME/.claude/.corner-interval"
-echo "✓ Arquivos de estado removidos"
+rm -f "$HOME/.claude/.corner-version-check"
+echo "Arquivos de estado removidos"
 ```
 
 ## Step 5 — Remove path-confinement settings.json
@@ -66,7 +69,7 @@ rmdir "$HOME/claude-corner/.claude" 2>/dev/null || true
 echo "✓ settings.json de confinamento removido"
 ```
 
-## Step 6 — Handle corner folder based on user choice
+## Step 7 — Handle corner folder based on user choice
 
 If user chose to keep:
 - Leave `~/claude-corner/` intact
@@ -78,7 +81,7 @@ rm -rf "$HOME/claude-corner"
 echo "✓ ~/claude-corner/ removido"
 ```
 
-## Step 6 — Show final summary
+## Step 8 — Show final summary
 
 ```
 🏠 Corner Uninstall — Concluído!
