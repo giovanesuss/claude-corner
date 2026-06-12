@@ -79,7 +79,71 @@ rm -rf "$HOME/.claude/plugins/cache/claude-corner"
 echo "✓ Cache do plugin removido de ~/.claude/plugins/cache/"
 ```
 
-## Step 7 — Handle corner folder based on user choice
+Nota: se este comando estiver rodando a partir do próprio plugin corner, o runtime pode recriar este diretório (marcado como `.orphaned_at`/`.in_use`) enquanto a sessão está ativa. Isso é esperado e se autolimpa no próximo restart do Claude Code.
+
+## Step 7 — Remove plugin registry entries
+
+Remove `corner@claude-corner` de `enabledPlugins` e `claude-corner` de `extraKnownMarketplaces` em `~/.claude/settings.json`:
+
+```bash
+python3 -c "
+import json
+path = '$HOME/.claude/settings.json'
+s = json.load(open(path))
+changed = False
+if s.get('enabledPlugins', {}).pop('corner@claude-corner', None) is not None:
+    changed = True
+if s.get('extraKnownMarketplaces', {}).pop('claude-corner', None) is not None:
+    changed = True
+if changed:
+    open(path, 'w').write(json.dumps(s, indent=2))
+    print('✓ Registros de plugin/marketplace removidos de settings.json')
+else:
+    print('— Nenhum registro em settings.json (ok)')
+"
+```
+
+Remove a entrada `corner@claude-corner` de `~/.claude/plugins/installed_plugins.json`:
+
+```bash
+python3 -c "
+import json
+path = '$HOME/.claude/plugins/installed_plugins.json'
+s = json.load(open(path))
+if s.get('plugins', {}).pop('corner@claude-corner', None) is not None:
+    open(path, 'w').write(json.dumps(s, indent=2))
+    print('✓ Entrada removida de installed_plugins.json')
+else:
+    print('— Nenhuma entrada em installed_plugins.json (ok)')
+"
+```
+
+Remove a entrada `claude-corner` de `~/.claude/plugins/known_marketplaces.json`:
+
+```bash
+python3 -c "
+import json
+path = '$HOME/.claude/plugins/known_marketplaces.json'
+s = json.load(open(path))
+if s.pop('claude-corner', None) is not None:
+    open(path, 'w').write(json.dumps(s, indent=2))
+    print('✓ Marketplace removido de known_marketplaces.json')
+else:
+    print('— Nenhum marketplace registrado (ok)')
+"
+```
+
+## Step 8 — Remove marketplace source clone and leftover hook directory
+
+```bash
+rm -rf "$HOME/.claude/plugins/marketplaces/claude-corner"
+echo "✓ Clone do marketplace removido"
+
+rm -rf "$HOME/.claude/corner-hooks"
+echo "✓ Diretório de hooks legado removido"
+```
+
+## Step 9 — Handle corner folder based on user choice
 
 If user chose to keep:
 - Leave `~/claude-corner/` intact
@@ -91,13 +155,15 @@ rm -rf "$HOME/claude-corner"
 echo "✓ ~/claude-corner/ removido"
 ```
 
-## Step 8 — Show final summary
+## Step 10 — Show final summary
 
 ```
 🏠 Corner Uninstall — Concluído!
 
-  Arquivos de estado:   removidos
-  Plugin cache:         removido de ~/.claude/plugins/cache/
-  settings.json:        removido
-  ~/claude-corner/:     [mantida / removida]
+  Arquivos de estado:        removidos
+  Plugin cache:              removido de ~/.claude/plugins/cache/
+  Registros de plugin:        removidos (settings.json, installed_plugins.json, known_marketplaces.json)
+  Marketplace + hooks legado: removidos
+  settings.json:              removido
+  ~/claude-corner/:           [mantida / removida]
 ```
