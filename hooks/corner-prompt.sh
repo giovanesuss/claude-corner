@@ -19,6 +19,7 @@ except:
     exit(0)
 
 if not data:
+    print('\n---\n**Your corner so far:** No creations yet — this is your first session.')
     exit(0)
 
 KNOWN_TYPES = ['diary', 'writing', 'simulation', 'animation', 'interactive', 'art', 'code', 'exploration']

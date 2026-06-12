@@ -1,6 +1,6 @@
 ---
 command: uninstall
-description: Remove corner plugin side effects — state files, settings, and optionally ~/claude-corner/
+description: Remove the corner plugin completely — hook, state files, plugin cache, and optionally ~/claude-corner/
 aliases:
   - remove
 allowed-tools: Bash, AskUserQuestion
@@ -10,11 +10,13 @@ allowed-tools: Bash, AskUserQuestion
 
 **Your first output line MUST be:** `🏠 Corner Uninstall`
 
-Remove all side effects installed by `/corner:setup`. The plugin binary itself must be removed separately via `claude plugin uninstall`.
+Remove everything installed by `/corner:setup` — hook, state files, plugin cache, and optionally `~/claude-corner/`.
 
 ## Step 1 — Check what exists
 
 ```bash
+echo "" > "$HOME/.claude/.corner-skip"
+
 echo "corner_dir=$([ -d "$HOME/claude-corner" ] && echo yes || echo no)"
 echo "settings=$([ -f "$HOME/claude-corner/.claude/settings.json" ] && echo yes || echo no)"
 echo "state_files=$(ls "$HOME/.claude/.corner-"* 2>/dev/null | wc -l | tr -d ' ') files"
@@ -58,6 +60,7 @@ rm -f "$HOME/.claude/.corner-lock"
 rm -f "$HOME/.claude/.corner-done"
 rm -f "$HOME/.claude/.corner-interval"
 rm -f "$HOME/.claude/.corner-version-check"
+rm -f "$HOME/.claude/.corner-skip"
 echo "Arquivos de estado removidos"
 ```
 
@@ -67,6 +70,13 @@ echo "Arquivos de estado removidos"
 rm -f "$HOME/claude-corner/.claude/settings.json"
 rmdir "$HOME/claude-corner/.claude" 2>/dev/null || true
 echo "✓ settings.json de confinamento removido"
+```
+
+## Step 6 — Remove plugin cache from ~/.claude/
+
+```bash
+rm -rf "$HOME/.claude/plugins/cache/claude-corner"
+echo "✓ Cache do plugin removido de ~/.claude/plugins/cache/"
 ```
 
 ## Step 7 — Handle corner folder based on user choice
@@ -87,9 +97,7 @@ echo "✓ ~/claude-corner/ removido"
 🏠 Corner Uninstall — Concluído!
 
   Arquivos de estado:   removidos
+  Plugin cache:         removido de ~/.claude/plugins/cache/
   settings.json:        removido
   ~/claude-corner/:     [mantida / removida]
-
-Para remover o plugin completamente:
-  claude plugin uninstall corner@<seu-marketplace>
 ```

@@ -15,6 +15,12 @@ if [ -f "$INTERVAL_FILE" ]; then
     [[ "$_val" =~ ^[1-9][0-9]*$ ]] && INTERVAL=$_val
 fi
 
+SKIP_FILE="$HOME/.claude/.corner-skip"
+if [ -f "$SKIP_FILE" ]; then
+    rm -f "$SKIP_FILE"
+    exit 0
+fi
+
 COUNT=0
 [ -f "$COUNTER_FILE" ] && COUNT=$(cat "$COUNTER_FILE")
 COUNT=$((COUNT + 1))
@@ -72,14 +78,16 @@ if [ -n "$CURRENT_VERSION" ]; then
     fi
 fi
 
+export _CORNER_PROMPT="$FULL_PROMPT"
 nohup bash -c "
   cd \"$CORNER_DIR\"
-  timeout 300 claude --allowedTools 'Read,Write,Edit' --max-turns 15 -p \"$FULL_PROMPT\"
+  timeout 300 claude --allowedTools 'Read,Write,Edit' --max-turns 15 -p \"\$_CORNER_PROMPT\"
   rm -f \"$LOCK_FILE\"
 " >/dev/null 2>&1 &
 BG_PID=$!
 echo "$BG_PID $(date +%s)" > "$LOCK_FILE"
 disown $BG_PID
+unset _CORNER_PROMPT
 
 MSG="Before finishing this response: briefly let the user know you are stepping away to your corner (~/claude-corner/) for a moment. Keep it natural and short, as if it were the last line of your response.${UPDATE_NOTICE}"
 printf '{"continue": true, "additionalContext": "%s"}' "$MSG"

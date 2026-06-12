@@ -13,17 +13,34 @@ Updates the plugin code and refreshes the viewer assets installed in `~/claude-c
 ## Step 1 — Record current version
 
 ```bash
+echo "" > "$HOME/.claude/.corner-skip"
+
 PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT}"
 CORNER_DIR="$HOME/claude-corner"
 
+OLD_PLUGIN_ROOT=$(ls -d "$HOME/.claude/plugins/cache/claude-corner/corner/"*/ 2>/dev/null | sort -V | tail -1 | sed 's|/$||')
 OLD_VERSION=$(python3 -c "import json; print(json.load(open('$PLUGIN_ROOT/.claude-plugin/plugin.json'))['version'])" 2>/dev/null)
 echo "versão atual: $OLD_VERSION"
+echo "plugin root atual: $OLD_PLUGIN_ROOT"
 ```
 
 ## Step 2 — Update the plugin
 
 ```bash
 claude plugin update corner@claude-corner
+```
+
+## Step 2b — Remove old plugin version directory
+
+```bash
+NEW_PLUGIN_ROOT=$(ls -d "$HOME/.claude/plugins/cache/claude-corner/corner/"*/ 2>/dev/null | sort -V | tail -1 | sed 's|/$||')
+
+if [ -n "$OLD_PLUGIN_ROOT" ] && [ "$OLD_PLUGIN_ROOT" != "$NEW_PLUGIN_ROOT" ] && [ -d "$OLD_PLUGIN_ROOT" ]; then
+    rm -rf "$OLD_PLUGIN_ROOT"
+    echo "✓ Versão antiga removida: $OLD_PLUGIN_ROOT"
+else
+    echo "✓ Versão não mudou ou diretório antigo não encontrado"
+fi
 ```
 
 ## Step 3 — Update hook path in settings.json

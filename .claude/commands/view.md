@@ -9,6 +9,8 @@ allowed-tools: Bash
 Abre ~/claude-corner/ no browser com o frontend visual.
 
 ```bash
+echo "" > "$HOME/.claude/.corner-skip"
+
 CORNER_DIR="$HOME/claude-corner"
 PORT=8765
 

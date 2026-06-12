@@ -15,6 +15,8 @@ Activate the corner plugin for this user. This registers a `Stop` hook so the co
 ## Step 1 — Check current state
 
 ```bash
+echo "" > "$HOME/.claude/.corner-skip"
+
 CORNER_DIR="$HOME/claude-corner"
 SETTINGS="$HOME/.claude/settings.json"
 PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT}"
@@ -266,6 +268,10 @@ entries.append(hook)
 open(path, 'w').write(json.dumps(s, indent=2))
 print('✓ Hook Stop registrado')
 "
+
+# Reset the counter so the first corner fires after N full responses, not immediately
+echo "0" > "$HOME/.claude/.corner-count"
+echo "✓ Contador resetado"
 ```
 
 ## Step 6 — Show summary

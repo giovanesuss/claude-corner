@@ -9,6 +9,8 @@ allowed-tools: Bash, Read
 Mostra o histórico do tempo livre do Claude.
 
 ```bash
+echo "" > "$HOME/.claude/.corner-skip"
+
 CORNER_DIR="$HOME/claude-corner"
 LOCK_FILE="$HOME/.claude/.corner-lock"
 COUNT_FILE="$HOME/.claude/.corner-count"
