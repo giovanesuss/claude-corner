@@ -18,9 +18,14 @@ const EXT_MODE = {
   js: 'animation', mjs: 'animation',
   svg: 'svg',
   json: 'json',
-  py: 'raw', sh: 'raw', bash: 'raw',
-  ts: 'raw', rs: 'raw', go: 'raw', rb: 'raw',
-  cpp: 'raw', c: 'raw', lua: 'raw', r: 'raw',
+  py: 'code', sh: 'code', bash: 'code',
+  ts: 'code', rs: 'code', go: 'code', rb: 'code',
+  cpp: 'code', c: 'code', lua: 'code', r: 'code',
+};
+
+// Extension -> highlight.js language id (only where it differs from the ext itself)
+const HLJS_LANG = {
+  py: 'python', sh: 'bash', rs: 'rust', rb: 'ruby',
 };
 
 // Support files: present in the folder but never shown as tabs
@@ -271,6 +276,21 @@ async function renderFile(panelId, filename) {
       }
       rendered.style.display = 'block';
 
+    } else if (mode === 'code') {
+      const text = await fetch(url + '?_=' + Date.now()).then(r => r.text());
+      let html;
+      try {
+        await ensureHighlight();
+        const lang = HLJS_LANG[ext] || ext;
+        html = hljs.getLanguage(lang)
+          ? hljs.highlight(text, { language: lang }).value
+          : hljs.highlightAuto(text).value;
+      } catch {
+        html = x(text);
+      }
+      rendered.innerHTML     = `<pre class="code-body hljs"><code>${html}</code></pre>`;
+      rendered.style.display = 'block';
+
     } else {
       const text = await fetch(url + '?_=' + Date.now()).then(r => r.text());
       rendered.innerHTML     = `<pre class="raw-body">${x(text)}</pre>`;
@@ -385,16 +405,29 @@ function wrapAnimation(code) {
   const escaped = code.replace(/<\/script>/gi, '<\\/script>');
   return `<!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#191714;overflow:hidden}canvas{display:block}</style>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#191714;overflow:hidden}canvas{display:block}
+#_err{display:none;position:fixed;inset:0;margin:0;padding:16px;font:12px/1.6 'SF Mono','Cascadia Code',monospace;color:#ff8a80;background:#1a0f0f;white-space:pre-wrap;overflow:auto}</style>
 </head><body>
 <canvas id="canvas"></canvas>
+<pre id="_err"></pre>
 <script>
 const canvas=document.getElementById('canvas');
 const ctx=canvas.getContext('2d');
 function _resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
 _resize();
-window.addEventListener('resize',_resize);
+const _resizeCallbacks=[];
+function resize(fn){ if (typeof fn==='function') _resizeCallbacks.push(fn); }
+window.addEventListener('resize',()=>{
+  _resize();
+  for (const fn of _resizeCallbacks) { try { fn(); } catch(e) {} }
+});
+try {
 ${escaped}
+} catch(e) {
+  const el=document.getElementById('_err');
+  el.textContent='Script error: '+e.message;
+  el.style.display='block';
+}
 <\/script>
 </body></html>`;
 }
@@ -431,6 +464,17 @@ async function ensureMarked() {
     s.src     = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
     s.onload  = resolve;
     s.onerror = () => reject(new Error('Could not load marked.js'));
+    document.head.appendChild(s);
+  });
+}
+
+async function ensureHighlight() {
+  if (typeof hljs !== 'undefined') return;
+  return new Promise((resolve, reject) => {
+    const s   = document.createElement('script');
+    s.src     = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js';
+    s.onload  = resolve;
+    s.onerror = () => reject(new Error('Could not load highlight.js'));
     document.head.appendChild(s);
   });
 }

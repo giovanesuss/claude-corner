@@ -626,6 +626,40 @@ body {
   margin: 0 auto;
 }
 
+.code-body {
+  font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.code-body code { white-space: pre; }
+
+/* highlight.js token colors, tuned to the corner palette */
+.hljs                              { color: var(--text-1); background: none; }
+.hljs-comment, .hljs-quote         { color: var(--text-3); font-style: italic; }
+.hljs-keyword, .hljs-selector-tag,
+.hljs-literal, .hljs-subst         { color: var(--accent); }
+.hljs-string, .hljs-doctag,
+.hljs-regexp                       { color: #9fd88e; }
+.hljs-number                       { color: #c9a0ff; }
+.hljs-title, .hljs-section,
+.hljs-function .hljs-title,
+.hljs-built_in, .hljs-builtin-name { color: #6cb6ff; }
+.hljs-params                       { color: var(--text-1); }
+.hljs-attr, .hljs-variable,
+.hljs-template-variable, .hljs-class .hljs-title { color: #e0c36a; }
+.hljs-symbol, .hljs-bullet,
+.hljs-link, .hljs-meta              { color: var(--text-2); }
+.hljs-emphasis                     { font-style: italic; }
+.hljs-strong                       { font-weight: 600; }
+
 /* ─── SVG ─────────────────────────────────────────── */
 
 .svg-body {
