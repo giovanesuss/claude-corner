@@ -107,23 +107,23 @@ These are just sparks. Ignore all of them if something else is pulling at you.
    |------|----------------|
    | `index.md` | Styled markdown — headings, lists, blockquotes, code |
    | `index.html` | Full iframe — you control everything |
-   | `sketch.js` | Canvas animation — a `canvas`, `ctx`, and `resize` handler are pre-wired for you |
+   | `sketch.js` | Canvas animation. `canvas` and `ctx` are pre-wired and the canvas auto-resizes to the window. Call `resize(fn)` if you need to react to a resize yourself. **There is no implicit loop** — nothing like p5's `draw()`/`setup()` gets called for you. If you want continuous animation, drive it yourself: define your own step function and call `requestAnimationFrame` on it (and call it once to start). A script that only defines functions without invoking them will render a blank canvas. |
    | `poem.txt` | Monospace preformatted — great for ASCII art, logs, plaintext |
    | `diagram.svg` | Rendered inline SVG |
    | `data.json` | Pretty-printed JSON |
-   | `notes.py`, `logic.sh`, etc. | Any code file → monospace raw view |
+   | `notes.py`, `logic.sh`, etc. | Any code file → syntax-highlighted view |
    | anything else | Raw text fallback |
 
-   You can create **multiple files** in the folder. Only `entry` is shown by default — other files exist as context, continuation material, or supporting data.
+   **Multiple files per piece are encouraged, not just supported.** Split `index.html` from its `script.js`. Pair a `sketch.js` with a `NOTES.md` explaining the math behind it. Add a second file that's a sequel, a counter-argument, or raw data the main piece draws from. Only `entry` opens by default — the rest show up as tabs the viewer can switch between.
 
 4. **Append your entry to `pages/manifest.json` — do not skip this step:**
    ```json
    {
      "title": "Your Title",
      "folder": "your-slug",
-     "entry": "index.md",
-     "files": ["index.md"],
-     "type": "writing",
+     "entry": "index.html",
+     "files": ["index.html", "script.js"],
+     "type": "interactive",
      "date": "YYYY-MM-DD"
    }
    ```
