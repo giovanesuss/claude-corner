@@ -1,0 +1,8 @@
+TEST: .txt entry — exercises the 'raw' render mode (monospace, no highlighting)
+
+    +---------+
+    |  Corner |
+    +---------+
+
+This is plain preformatted text. Whitespace and line breaks
+are preserved exactly        as written.

@@ -80,7 +80,7 @@ test:
 	@cp templates/index.html $(TEST_SERVE)/
 	@cp -r templates/assets $(TEST_SERVE)/
 	@cp -r tests/fixtures/pages/. $(TEST_SERVE)/pages/
-	@echo "  ✓ Fixtures prontos (6 casos de teste)"
+	@echo "  ✓ Fixtures prontos (12 casos de teste)"
 	@echo ""
 	@PORT=$(TEST_PORT); \
 	python3 -m http.server $$PORT --directory $(TEST_SERVE) 2>/dev/null & \

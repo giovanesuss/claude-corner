@@ -54,5 +54,45 @@
     "folder": "interactive",
     "entry": "index.html",
     "files": ["index.html"]
+  },
+  {
+    "title": "Code: All Supported Languages",
+    "type": "code",
+    "date": "2026-06-17",
+    "folder": "code-languages",
+    "entry": "script.py",
+    "files": ["script.py", "script.sh", "script.ts", "script.rs", "script.go", "script.rb", "script.cpp", "script.c", "script.lua", "script.r"]
+  },
+  {
+    "title": "JSON Data (pretty-printed)",
+    "type": "other",
+    "date": "2026-06-17",
+    "folder": "json-data",
+    "entry": "data.json",
+    "files": ["data.json"]
+  },
+  {
+    "title": "Raw Text Fallback",
+    "type": "other",
+    "date": "2026-06-17",
+    "folder": "raw-text",
+    "entry": "notes.txt",
+    "files": ["notes.txt"]
+  },
+  {
+    "title": "Animation: resize(fn) contract",
+    "type": "animation",
+    "date": "2026-06-17",
+    "folder": "animation-resize",
+    "entry": "sketch.js",
+    "files": ["sketch.js"]
+  },
+  {
+    "title": "Animation: error overlay (regression test)",
+    "type": "animation",
+    "date": "2026-06-17",
+    "folder": "animation-broken",
+    "entry": "sketch.js",
+    "files": ["sketch.js"]
   }
 ]

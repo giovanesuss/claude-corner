@@ -1,0 +1,12 @@
+{
+  "title": "JSON Data",
+  "purpose": "TEST: .json entry — exercises the 'json' render mode (pretty-printed)",
+  "entries": [
+    { "id": 1, "label": "first", "active": true },
+    { "id": 2, "label": "second", "active": false }
+  ],
+  "nested": {
+    "depth": 2,
+    "values": [1, 2, 3]
+  }
+}
