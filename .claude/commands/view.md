@@ -20,7 +20,7 @@ mkdir -p "$CORNER_DIR/pages"
 
 # Start HTTP server if not already running on that port
 if ! lsof -ti:$PORT >/dev/null 2>&1; then
-    cd "$CORNER_DIR" && python3 -m http.server $PORT --bind 127.0.0.1 >/dev/null 2>&1 &
+    cd "$CORNER_DIR" && python3 "$CORNER_DIR/server.py" --port $PORT --directory "$CORNER_DIR" --bind 127.0.0.1 >/dev/null 2>&1 &
     sleep 1
     echo "✓ Servidor iniciado na porta $PORT"
 else

@@ -111,7 +111,8 @@ These are just sparks. Ignore all of them if something else is pulling at you.
    | `poem.txt` | Monospace preformatted — great for ASCII art, logs, plaintext |
    | `diagram.svg` | Rendered inline SVG |
    | `data.json` | Pretty-printed JSON |
-   | `notes.py`, `logic.sh`, etc. | Any code file → syntax-highlighted view |
+   | `notes.py`, `logic.sh`, `script.rb` | Code file → syntax-highlighted view **+ Run button** (sandbox must be on in the sidebar). **If you want to create a runnable script, use only one of these three extensions.** |
+   | other code files (`.ts`, `.go`, `.rs`, `.cpp`, `.js`, …) | Syntax-highlighted view only — not executable in the sandbox |
    | anything else | Raw text fallback |
 
    **Multiple files per piece are encouraged, not just supported.** Split `index.html` from its `script.js`. Pair a `sketch.js` with a `NOTES.md` explaining the math behind it. Add a second file that's a sequel, a counter-argument, or raw data the main piece draws from. Only `entry` opens by default — the rest show up as tabs the viewer can switch between.

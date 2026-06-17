@@ -56,6 +56,11 @@ const panels = {
   b: { frame: null, rendered: null },
 };
 
+let sandboxOn   = false;
+let sandboxBusy = false;
+const runInFlight = { a: false, b: false };
+const RUNNABLE_EXTS = new Set(['py', 'sh', 'rb']);
+
 // ── Init ───────────────────────────────────────────
 
 function init() {
@@ -69,8 +74,75 @@ function init() {
 
   initInfoBar();
   initResize();
+  initSandboxToggle();
   loadManifest();
   setInterval(loadManifest, 30000);
+}
+
+// ── Sandbox toggle ─────────────────────────────────
+
+function initSandboxToggle() {
+  document.getElementById('sandbox-switch').addEventListener('click', () => {
+    if (sandboxBusy) return;
+    sandboxOn ? stopSandbox() : startSandbox();
+  });
+  refreshSandboxStatus();
+}
+
+async function refreshSandboxStatus() {
+  try {
+    const r    = await fetch('/__sandbox/status');
+    const data = await r.json();
+    setSandboxUI(!!data.running);
+  } catch {
+    setSandboxUI(false);
+  }
+}
+
+async function startSandbox() {
+  sandboxBusy = true;
+  setSandboxUI(false, true);
+  try {
+    const r    = await fetch('/__sandbox/start', { method: 'POST' });
+    const data = await r.json();
+    setSandboxUI(!!data.ok);
+  } catch {
+    setSandboxUI(false);
+  }
+  sandboxBusy = false;
+  refreshRunButtons();
+}
+
+async function stopSandbox() {
+  sandboxBusy = true;
+  try {
+    await fetch('/__sandbox/stop', { method: 'POST' });
+  } catch { /* ignore — UI goes to off regardless */ }
+  sandboxBusy = false;
+  setSandboxUI(false);
+  refreshRunButtons();
+}
+
+function setSandboxUI(on, loading = false) {
+  sandboxOn = on;
+  const dot      = document.getElementById('sandbox-dot');
+  const label    = document.getElementById('sandbox-label-text');
+  const switchEl = document.getElementById('sandbox-switch');
+
+  dot.classList.toggle('loading', loading);
+  dot.classList.toggle('on', on && !loading);
+  switchEl.setAttribute('aria-checked', String(on));
+  switchEl.disabled = loading;
+  label.textContent = loading ? 'Sandbox starting…' : (on ? 'Sandbox on' : 'Sandbox off');
+}
+
+function refreshRunButtons() {
+  document.querySelectorAll('.run-btn').forEach(btn => {
+    const panelId = btn.dataset.panel;
+    if (runInFlight[panelId]) return;
+    btn.disabled = !sandboxOn;
+    btn.title    = sandboxOn ? '' : 'Sandbox off — turn it on in the sidebar';
+  });
 }
 
 // ── Manifest ───────────────────────────────────────
@@ -288,7 +360,19 @@ async function renderFile(panelId, filename) {
       } catch {
         html = x(text);
       }
-      rendered.innerHTML     = `<pre class="code-body hljs"><code>${html}</code></pre>`;
+
+      if (RUNNABLE_EXTS.has(ext)) {
+        rendered.innerHTML = `
+          <div class="run-bar">
+            <button class="run-btn" id="run-btn-${panelId}" data-panel="${panelId}">Run</button>
+            <span class="run-status" id="run-status-${panelId}"></span>
+          </div>
+          <pre class="code-body hljs"><code>${html}</code></pre>
+          <div class="run-output" id="run-output-${panelId}" style="display:none"></div>`;
+        wireRunButton(panelId, url);
+      } else {
+        rendered.innerHTML = `<pre class="code-body hljs"><code>${html}</code></pre>`;
+      }
       rendered.style.display = 'block';
 
     } else {
@@ -396,6 +480,58 @@ function initResize() {
     handle.classList.remove('dragging');
     document.body.style.cursor     = '';
     document.body.style.userSelect = '';
+  });
+}
+
+// ── Run button (Python sandbox) ────────────────────
+
+function wireRunButton(panelId, url) {
+  runInFlight[panelId] = false;
+
+  const btn     = document.getElementById(`run-btn-${panelId}`);
+  const status  = document.getElementById(`run-status-${panelId}`);
+  const output  = document.getElementById(`run-output-${panelId}`);
+  const relPath = url.replace(/^pages\//, '');
+
+  btn.disabled = !sandboxOn;
+  btn.title    = sandboxOn ? '' : 'Sandbox off — turn it on in the sidebar';
+
+  btn.addEventListener('click', async () => {
+    if (runInFlight[panelId] || !sandboxOn) return;
+    runInFlight[panelId]  = true;
+    btn.disabled          = true;
+    btn.textContent       = 'Running…';
+    status.textContent    = '';
+    output.style.display  = 'block';
+    output.innerHTML      = '<div class="run-pending">Running…</div>';
+
+    try {
+      const r = await fetch('/__run', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ path: relPath }),
+      });
+      const data = await r.json();
+
+      if (!data.ok) {
+        if (data.error === 'sandbox_off') setSandboxUI(false);
+        output.innerHTML = `<div class="run-error">Error: ${x(data.error || 'unknown')}</div>`;
+      } else {
+        let html = '';
+        if (data.timed_out) html += `<div class="run-timeout">Timed out after 15s</div>`;
+        if (data.stdout)    html += `<pre class="run-stdout">${x(data.stdout)}</pre>`;
+        if (data.stderr)    html += `<pre class="run-stderr">${x(data.stderr)}</pre>`;
+        html += `<div class="run-meta">exit code: ${data.exit_code ?? '—'}</div>`;
+        if (data.truncated) html += `<div class="run-truncated">Output truncated</div>`;
+        output.innerHTML = html;
+      }
+    } catch {
+      output.innerHTML = `<div class="run-error">Could not reach server</div>`;
+    } finally {
+      runInFlight[panelId] = false;
+      btn.disabled          = !sandboxOn;
+      btn.textContent       = 'Run';
+    }
   });
 }
 

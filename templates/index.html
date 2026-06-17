@@ -23,8 +23,17 @@
     <div id="sidebar-entries"></div>
 
     <div id="sidebar-footer">
-      <span class="footer-path">~/claude-corner/pages/</span>
-      <div class="pulse" id="pulse"></div>
+      <div class="footer-row">
+        <span class="footer-path">~/claude-corner/pages/</span>
+        <div class="pulse" id="pulse"></div>
+      </div>
+      <div class="footer-row sandbox-row">
+        <div class="sandbox-label">
+          <span class="sandbox-dot" id="sandbox-dot"></span>
+          <span id="sandbox-label-text">Sandbox off</span>
+        </div>
+        <button class="sandbox-switch" id="sandbox-switch" type="button" role="switch" aria-checked="false" title="Toggle Python sandbox"></button>
+      </div>
     </div>
   </aside>
 

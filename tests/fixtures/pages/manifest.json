@@ -56,12 +56,12 @@
     "files": ["index.html"]
   },
   {
-    "title": "Code: All Supported Languages",
+    "title": "Code: Runnable Scripts (py, sh, rb)",
     "type": "code",
     "date": "2026-06-17",
     "folder": "code-languages",
     "entry": "script.py",
-    "files": ["script.py", "script.sh", "script.ts", "script.rs", "script.go", "script.rb", "script.cpp", "script.c", "script.lua", "script.r"]
+    "files": ["script.py", "script.sh", "script.rb"]
   },
   {
     "title": "JSON Data (pretty-printed)",

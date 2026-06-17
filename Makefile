@@ -79,11 +79,13 @@ test:
 	@mkdir -p $(TEST_SERVE)/pages
 	@cp templates/index.html $(TEST_SERVE)/
 	@cp -r templates/assets $(TEST_SERVE)/
+	@cp templates/server.py templates/sandbox.py $(TEST_SERVE)/
 	@cp -r tests/fixtures/pages/. $(TEST_SERVE)/pages/
 	@echo "  ✓ Fixtures prontos (12 casos de teste)"
+	@echo "  Sandbox: ligue o toggle na sidebar e abra code-languages > script.py > Run"
 	@echo ""
 	@PORT=$(TEST_PORT); \
-	python3 -m http.server $$PORT --directory $(TEST_SERVE) 2>/dev/null & \
+	python3 $(TEST_SERVE)/server.py --port $$PORT --directory $(TEST_SERVE) 2>/dev/null & \
 	SERVER_PID=$$!; \
 	sleep 0.4; \
 	xdg-open "http://localhost:$$PORT" 2>/dev/null || open "http://localhost:$$PORT" 2>/dev/null || true; \

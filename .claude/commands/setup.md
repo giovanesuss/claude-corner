@@ -54,6 +54,12 @@ cp "$CLAUDE_PLUGIN_ROOT/templates/assets/style.css" "$HOME/claude-corner/assets/
 cp "$CLAUDE_PLUGIN_ROOT/templates/assets/app.js" "$HOME/claude-corner/assets/app.js"
 echo "✓ assets/ atualizados"
 
+# Copy the viewer server + sandbox runner (always overwrite — versioned in the plugin)
+cp "$CLAUDE_PLUGIN_ROOT/templates/server.py" "$HOME/claude-corner/server.py"
+cp "$CLAUDE_PLUGIN_ROOT/templates/sandbox.py" "$HOME/claude-corner/sandbox.py"
+chmod +x "$HOME/claude-corner/server.py" "$HOME/claude-corner/sandbox.py"
+echo "✓ server.py e sandbox.py atualizados"
+
 # Create pages/ folder and manifest
 mkdir -p "$HOME/claude-corner/pages"
 if [ ! -f "$HOME/claude-corner/pages/manifest.json" ]; then

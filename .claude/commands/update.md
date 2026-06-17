@@ -89,6 +89,11 @@ cp "$NEW_PLUGIN_ROOT/templates/assets/style.css" "$CORNER_DIR/assets/style.css" 
 cp "$NEW_PLUGIN_ROOT/templates/assets/app.js" "$CORNER_DIR/assets/app.js" 2>/dev/null || true
 echo "index.html e assets/ atualizados"
 
+cp "$NEW_PLUGIN_ROOT/templates/server.py" "$CORNER_DIR/server.py" 2>/dev/null || true
+cp "$NEW_PLUGIN_ROOT/templates/sandbox.py" "$CORNER_DIR/sandbox.py" 2>/dev/null || true
+chmod +x "$CORNER_DIR/server.py" "$CORNER_DIR/sandbox.py" 2>/dev/null || true
+echo "server.py e sandbox.py atualizados"
+
 echo "— PROMPT.md e pages/ não foram tocados"
 ```
 
@@ -111,8 +116,11 @@ echo "versão nova: $NEW_VERSION"
   hook path:       atualizado
   index.html:      atualizado (backup em index.html.bak)
   assets/:         atualizados
+  server.py/sandbox.py: atualizados
   PROMPT.md:       mantido
   pages/:          mantido
 ```
+
+Se um servidor antigo já estiver rodando na porta 8765 (iniciado antes deste update), ele continua sendo o `http.server` antigo até ser reiniciado — mencione ao usuário que basta rodar `/corner:view` depois de matar o processo antigo (`lsof -ti:8765 | xargs kill`) para o sandbox toggle aparecer funcional.
 
 Se `$OLD_VERSION` e `$NEW_VERSION` forem iguais, mencione que o plugin já estava na última versão.
